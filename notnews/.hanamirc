@@ -1,0 +1,3 @@
+project=notnews
+test=minitest
+template=erb
