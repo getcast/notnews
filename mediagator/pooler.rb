@@ -13,11 +13,11 @@ class Pooler
 			@sources.each do |source|
 				t = Thread.new do
 					if @extractor.verify(source)
-						new_data = extractor.extract(source)
+						new_data = @extractor.extract(source)
 						@repository.batch_update(new_data)
 
 						@subscribers.each do |subscribe|
-							subscriber.notify(source, new_data)
+							subscribe.notify(source, new_data)
 						end
 					end
 				end

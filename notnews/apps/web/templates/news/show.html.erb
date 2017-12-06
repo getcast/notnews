@@ -1,0 +1,17 @@
+<% if rep %>
+	<%rep.each do |n| %>
+		<div id="holder">
+			<% if n.source == "http://www.theonion.com/rss" %>
+				<h2>The Onion</h2>
+			<% elsif n.source == "http://www.clickhole.com/feeds/rss"%>
+				<h2>Clickhole</h2>
+			<% elsif n.source == "https://www.sensacionalista.com.br/feed/"%>
+				<h2>Sensacionalista</h2>
+			<%end%>
+			<img src= "<%= n.image %>"><br>
+			<h2><a href="<%= n.url%>"><%= n.title %></a></h2>
+			<%= n.published %>
+		</div>
+		<br>
+	<% end %>
+<% end %>
