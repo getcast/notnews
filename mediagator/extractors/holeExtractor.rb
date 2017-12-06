@@ -1,7 +1,7 @@
 require 'feedjira'
 require 'nokogiri'
 
-class ClickHoleExtractor < Extractor
+class HoleExtractor < Extractor
 
 	def initialize
 	end

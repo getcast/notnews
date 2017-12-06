@@ -1,23 +1,39 @@
 Application.config do
 	pool do # example 1
-		sources "mysource1", "mysource2" # Sources list
-		extractor ExtractorClassA        # Extractor
-		repository RepositoryClassB      # Repository
+		sources  'http://www.clickhole.com/feeds/rss' # Sources list
+		extractor HoleExtractor        # Extractor
+		repository NewsRepository      # Repository
+		wait_time 10
 	end
 
 	pool do # you can add more poolers
-		sources "another"
-		extractor ExtractorClassC
-		repository RepositoryClassD
-		subscribers SubscriberClassE   # optional
-		wait_time 500                  # optional, default: 300. (in seconds)     
+		sources "http://www.theonion.com/rss"
+		extractor OnionExtractor 
+		repository NewsRepository 
+		wait_time 10
+	end
+
+	pool do # you can add more poolers
+		sources "https://www.sensacionalista.com.br/feed/"
+		extractor SensacionalistaExtractor 
+		repository NewsRepository 
+		wait_time 10
 	end
 end
 
-Database.config('postgres://mosaic:marvelouspandaband@localhost/mosaic') do
-	create_table?(:photos) do  # example
+Database.config \
+        adapter: :postgres, \
+        user: 'notnews', \
+        password: 'fake', \
+        host: 'localhost', \
+        database: 'notnews' \
+do
+	create_table?(:news) do  # example
 		primary_key :id,
 		String :url, null: false
-		DateTime :date_added, null: false, default: Sequel::CURRENT_TIMESTAMP
+		DateTime :published, null: false, default: Sequel::CURRENT_TIMESTAMP
+		String :image, null: true
+		String :source, null: false
+		String :title, null: true
 	end
 end
