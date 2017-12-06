@@ -11,8 +11,8 @@ class ClickHoleExtractor < Extractor
 		return true
 	end
 
-	def extract(url)
-		xml = Feedjira::Feed.connection(url).get.body	
+	def extract(source)
+		xml = Feedjira::Feed.connection(source).get.body	
 		feed = Feedjira::Feed.parse_with(Feedjira::Parser::RSS, xml)
 		feedEnum = []
 		feed.entries.each do |entry|
@@ -29,6 +29,7 @@ class ClickHoleExtractor < Extractor
 			f[:title] = title
 			f[:published] = published
 			f[:image] = image	
+			f[:source] = source 
 			feedEnum << f
 		
 		feedEnum
